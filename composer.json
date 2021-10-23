@@ -1,16 +1,17 @@
 {
-    "name": "madpeterz/YapfInputFilter",
+    "name": "madpeterz/yapfinputfilter",
     "description": "YAPF - The input filter",
     "type": "library",
     "license": "GPL-3.0-only",
     "autoload": {
         "psr-4": {
-            "YAPF\\": "src/"
+            "YAPF\\Core\\ErrorControl\\": "src/Core/ErrorControl",
+            "YAPF\\InputFilter\\": "src/InputFilter"
         }
     },
     "support": {
-        "source": "https://github.com/Madpeterz/TBA",
-        "issues": "https://github.com/Madpeterz/TBA/issues"
+        "source": "https://github.com/Madpeterz/YAPFInputFilter",
+        "issues": "https://github.com/Madpeterz/YAPFInputFilter/issues"
     },
     "config": {
         "platform": {
@@ -18,7 +19,7 @@
         }
     },
     "require": {
-        "php": ">=7.4",
+        "php": ">=7.4"
     },
     "require-dev": {
         "slevomat/coding-standard": "^6.4",
