@@ -216,7 +216,10 @@ abstract class Rules extends Checks
         );
         $this->valueAsInt = $date->format("U");
         $this->valueAsFloat = $this->valueAsInt;
+        $timezone = date_default_timezone_get();
+        date_default_timezone_set('Europe/London');
         $this->valueAsHumanReadable = date('l jS \of F Y', $this->valueAsInt);
+        date_default_timezone_set($timezone);
 
         return $this;
     }
