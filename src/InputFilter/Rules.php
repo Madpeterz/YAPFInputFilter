@@ -6,6 +6,16 @@ use Exception;
 
 abstract class Rules extends Checks
 {
+    public function htmlDecode(): InputFilter
+    {
+        if ($this->valueAsString == null) {
+            return $this;
+        }
+        $this->valueAsString = html_entity_decode($this->valueAsString);
+        return $this;
+    }
+
+
     /**
      * supports: string,int,float or array as the check value
      */
