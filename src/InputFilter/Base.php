@@ -74,10 +74,16 @@ abstract class Base extends ErrorLogging
      */
     protected function fetchValue(string $source, string $field)
     {
+        $sourceDat = [];
         if ($source == "post") {
-            return $_POST[$field];
+            $sourceDat = &$_POST;
+        } elseif ($source == "get") {
+            $sourceDat = &$_GET;
         }
-        return $_GET[$field];
+        if (array_key_exists($field, $sourceDat) == false) {
+            return null;
+        }
+        return $sourceDat[$field];
     }
 
     protected function convertValue(string $source, string $field, ?string $value = null): void
