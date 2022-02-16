@@ -61,6 +61,12 @@ abstract class Base extends ErrorLogging
         $this->convertValue("get", $field);
         return $this;
     }
+    public function varinput(string $value): InputFilter
+    {
+        $this->reset();
+        $this->convertValue("", "", $value);
+        return $this;
+    }
 
     /**
      * fetchValue
@@ -74,9 +80,11 @@ abstract class Base extends ErrorLogging
         return $_GET[$field];
     }
 
-    protected function convertValue(string $source, string $field): void
+    protected function convertValue(string $source, string $field, ?string $value = null): void
     {
-        $value = $this->fetchValue($source, $field);
+        if ($value == null) {
+            $value = $this->fetchValue($source, $field);
+        }
         $this->valueAsArray = null;
         if (is_array($value) == true) {
             $this->valueAsArray = $value;

@@ -173,4 +173,26 @@ class checkTest extends TestCase
         $reply = $input->post("magic")->checkStringLengthMax(3)->asString();
         $this->assertSame($reply, null, "Expected the reply to be null");
     }
+
+    public function test_varInput()
+    {
+        $input = new InputFilter();
+        $reply = $input->varinput("testing")->checkStringLengthMax(50)->asString();
+        $this->assertSame($reply, "testing", $input->getWhyFailed());
+
+        $reply = $input->varinput("what what say")->checkStringLengthMax(5)->asString();
+        $this->assertSame($reply, null, "Expected the reply to be null");
+
+        $reply = $input->varinput("do_the_thing")->checkStringLengthMax(80)->asString();
+        $this->assertSame($reply, "do_the_thing", $input->getWhyFailed());
+
+        $reply = $input->varinput("this is to long")->checkStringLengthMax(3)->asString();
+        $this->assertSame($reply, null, "Expected the reply to be null");
+
+        $reply = $input->varinput("45")->checkInRange(30,50)->asInt();
+        $this->assertSame($reply, 45, $input->getWhyFailed());
+
+        $reply = $input->varinput("100")->checkGrtThanEq(300)->asInt();
+        $this->assertSame($reply, null, "Expected the reply to be null");
+    }
 }
