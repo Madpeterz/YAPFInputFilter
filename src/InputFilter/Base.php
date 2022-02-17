@@ -61,7 +61,7 @@ abstract class Base extends ErrorLogging
         $this->convertValue("get", $field);
         return $this;
     }
-    public function varinput(string $value): InputFilter
+    public function varinput(?string $value): InputFilter
     {
         $this->reset();
         $this->convertValue("", "", $value);
