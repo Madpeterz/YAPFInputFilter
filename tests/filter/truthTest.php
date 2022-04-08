@@ -78,6 +78,7 @@ class truthTest extends TestCase
         $_GET["testing2"] = "asdasd1234qf";
         $_POST["magic"] = json_encode(["users"=>[],"votes"=>["up"=>1]]);
         $_POST["magic2"] = "<xml><red>Wolf</red><42>lost</42><up>down</up></xml>";
+        $_POST["asdasasd"] = "1";
         
         $input = new InputFilter();
         $reply = $input->get("testing")->isJson()->asArray();
@@ -91,6 +92,10 @@ class truthTest extends TestCase
 
         $reply = $input->post("magic2")->isJson()->asArray();
         $this->assertSame(null, $reply, "Expected reply to be null ".$input->getWhyFailed());
+
+        $reply = $input->post("asdasasd")->isJson()->asArray();
+        $this->assertSame(null, $reply, "Expected reply to be null ".$input->getWhyFailed());
+        $this->assertSame("Json did not unpack as an array",$input->getWhyFailed(),"Why failed in incorrect");
     }
 
     public function test_isUuid()
