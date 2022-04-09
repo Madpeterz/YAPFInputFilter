@@ -4,7 +4,7 @@ namespace YAPF\InputFilter;
 
 use Exception;
 
-abstract class Rules extends Checks
+abstract class Rules extends Convertors
 {
     public function htmlDecode(): InputFilter
     {

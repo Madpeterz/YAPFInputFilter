@@ -195,4 +195,17 @@ class checkTest extends TestCase
         $reply = $input->varinput("100")->checkGrtThanEq(300)->asInt();
         $this->assertSame($reply, null, "Expected the reply to be null");
     }
+
+    public function test_base64()
+    {
+        $input = new InputFilter();
+        $testing = "eyJ0b2tlbiI6ImNhdHMifQ==";
+        $reply = $input->varinput($testing)->fromBase64()->isJson()->asArray();
+        $this->assertSame(1, count($reply), "incorrect number of results");
+        $this->assertSame("cats", $reply["token"], "Wrong token");
+
+        $testing = "cGV0ZXIgaXMgZXZpbA==";
+        $reply = $input->varinput($testing)->fromBase64()->asString();
+        $this->assertSame("peter is evil", $reply, "wrong reply");
+    }
 }
