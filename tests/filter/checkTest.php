@@ -177,22 +177,22 @@ class checkTest extends TestCase
     public function test_varInput()
     {
         $input = new InputFilter();
-        $reply = $input->varinput("testing")->checkStringLengthMax(50)->asString();
+        $reply = $input->varInput("testing")->checkStringLengthMax(50)->asString();
         $this->assertSame($reply, "testing", $input->getWhyFailed());
 
-        $reply = $input->varinput("what what say")->checkStringLengthMax(5)->asString();
+        $reply = $input->varInput("what what say")->checkStringLengthMax(5)->asString();
         $this->assertSame($reply, null, "Expected the reply to be null");
 
-        $reply = $input->varinput("do_the_thing")->checkStringLengthMax(80)->asString();
+        $reply = $input->varInput("do_the_thing")->checkStringLengthMax(80)->asString();
         $this->assertSame($reply, "do_the_thing", $input->getWhyFailed());
 
-        $reply = $input->varinput("this is to long")->checkStringLengthMax(3)->asString();
+        $reply = $input->varInput("this is to long")->checkStringLengthMax(3)->asString();
         $this->assertSame($reply, null, "Expected the reply to be null");
 
-        $reply = $input->varinput("45")->checkInRange(30,50)->asInt();
+        $reply = $input->varInput("45")->checkInRange(30,50)->asInt();
         $this->assertSame($reply, 45, $input->getWhyFailed());
 
-        $reply = $input->varinput("100")->checkGrtThanEq(300)->asInt();
+        $reply = $input->varInput("100")->checkGrtThanEq(300)->asInt();
         $this->assertSame($reply, null, "Expected the reply to be null");
     }
 
@@ -200,12 +200,12 @@ class checkTest extends TestCase
     {
         $input = new InputFilter();
         $testing = "eyJ0b2tlbiI6ImNhdHMifQ==";
-        $reply = $input->varinput($testing)->fromBase64()->isJson()->asArray();
+        $reply = $input->varInput($testing)->fromBase64()->isJson()->asArray();
         $this->assertSame(1, count($reply), "incorrect number of results");
         $this->assertSame("cats", $reply["token"], "Wrong token");
 
         $testing = "cGV0ZXIgaXMgZXZpbA==";
-        $reply = $input->varinput($testing)->fromBase64()->asString();
+        $reply = $input->varInput($testing)->fromBase64()->asString();
         $this->assertSame("peter is evil", $reply, "wrong reply");
     }
 }
