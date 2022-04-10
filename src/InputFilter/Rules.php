@@ -16,13 +16,29 @@ abstract class Rules extends Convertors
     }
 
 
+    protected function isNotMachingArray(array $testing): InputFilter
+    {
+        if ($this->valueAsArray === null) {
+            $this->failed("Array and value are both null");
+            return $this;
+        }
+        if (count($testing) != count($this->valueAsArray)) {
+            return $this;
+        }
+        if (count(array_diff($testing, $this->valueAsArray)) == 0) {
+            $this->failed("Arrays match");
+            return $this;
+        }
+        return $this;
+    }
+
     /**
      * supports: string,int,float or array as the check value
      */
     public function isNot($value): InputFilter
     {
-        if (strval($this->valueAsString) === strval($value)) {
-            $this->failed("Values match");
+        if (is_array($value) == true) {
+            return $this->isNotMachingArray($value);
         }
         if ((is_double($value) == true) || (is_float($value) == true)) {
             $A = intval(($this->valueAsFloat * 100)) / 100;
@@ -32,18 +48,8 @@ abstract class Rules extends Convertors
             }
             return $this;
         }
-        if (is_array($value) == false) {
-            return $this;
-        }
-        if (count($value) != count($this->valueAsArray)) {
-            return $this;
-        }
-        if ($this->valueAsArray === null) {
-            $this->failed("Array and value are both null");
-            return $this;
-        }
-        if (count(array_diff($value, $this->valueAsArray)) == 0) {
-            $this->failed("Arrays match");
+        if (strval($this->valueAsString) === strval($value)) {
+            $this->failed("Values match");
             return $this;
         }
         return $this;
