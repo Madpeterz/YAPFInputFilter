@@ -39,7 +39,7 @@ abstract class Base extends ErrorLogging
     protected function failed(string $why): void
     {
         $this->reset();
-        $this->addError(__FILE__, __FUNCTION__, $why);
+        $this->addError($why);
         $this->whyfailed = $why;
     }
 
