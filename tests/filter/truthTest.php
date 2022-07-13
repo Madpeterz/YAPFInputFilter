@@ -246,7 +246,15 @@ class truthTest extends TestCase
 
         $reply = $input->post("magic2")->isDate()->asString();
         $this->assertSame($reply, null, "Expected the reply to be null ".$input->getWhyFailed());
+    }
 
-
+    public function test_NullTypeString()
+    {
+        global $_POST;
+        $_POST["magic"] = null;
+        $input = new InputFilter();
+        $reply = $input->post("magic")->asString();
+        $this->assertSame(null, $reply, "Expected reply to be null");
     }
 }
+
