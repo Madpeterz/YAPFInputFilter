@@ -7,32 +7,33 @@ use YAPF\InputFilter\Rules;
 
 class InputFilter extends Rules
 {
-    public function asHumanReadable(): ?string
+    public function asHumanReadable(?string $defaultNull = null): ?string
     {
+        $output = $this->valueAsString;
         if ($this->valueAsHumanReadable != null) {
-            return $this->valueAsHumanReadable;
+            $output =  $this->valueAsHumanReadable;
         }
-        return $this->valueAsString;
+        return $output ?? $defaultNull;
     }
 
-    public function asString(): ?string
+    public function asString(?string $defaultNull = null): ?string
     {
-        return $this->valueAsString;
+        return $this->valueAsString ?? $defaultNull;
     }
 
-    public function asFloat(): ?float
+    public function asFloat(?float $defaultNull = null): ?float
     {
-        return $this->valueAsFloat;
+        return $this->valueAsFloat ?? $defaultNull;
     }
 
-    public function asInt(): ?int
+    public function asInt(?int $defaultNull = null): ?int
     {
-        return $this->valueAsInt;
+        return $this->valueAsInt ?? $defaultNull;
     }
 
-    public function asBool(): bool
+    public function asBool(?bool $defaultNull = null): bool
     {
-        return $this->valueAsBool;
+        return $this->valueAsBool ?? $defaultNull;
     }
 
     /**
@@ -40,8 +41,8 @@ class InputFilter extends Rules
      * returns the result as an array or null
      * @return ?mixed[]
      */
-    public function asArray(): ?array
+    public function asArray(?array $defaultNull = null): ?array
     {
-        return $this->valueAsArray;
+        return $this->valueAsArray ?? $defaultNull;
     }
 }
