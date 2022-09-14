@@ -283,14 +283,16 @@ class truthTest extends TestCase
         $_POST["magic"] = "seven";
         $input = new InputFilter();
         $reply = $input->post("magic")->asChunks();
-        $this->assertSame(6, count($reply), "Expected reply length to be 2");
+        $this->assertSame(5, count($reply), "Expected reply length to be 5");
         $this->assertSame("e", $reply[1], "Incorrect split detected");
 
         $_POST["magic"] = "pokepikepool";
         $input = new InputFilter();
         $reply = $input->post("magic")->asChunks(4);
         $this->assertSame(3, count($reply), "Expected reply length to be 2");
+        $this->assertSame(4, strlen($reply[0]), "Incorrect split detected");
         $this->assertSame("poke", $reply[0], "Incorrect split detected");
+        
     }
 }
 
