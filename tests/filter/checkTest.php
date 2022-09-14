@@ -208,4 +208,35 @@ class checkTest extends TestCase
         $reply = $input->varInput($testing)->fromBase64()->asString();
         $this->assertSame("peter is evil", $reply, "wrong reply");
     }
+
+    public function test_defaults()
+    {
+        $input = new InputFilter();
+        $magic = $input->varInput(null)->asString("magic");
+        $this->assertSame("magic", $magic, "Magic did not happen");
+
+        $magic = $input->varInput("anti")->asString("magic");
+        $this->assertSame("anti", $magic, "to much magic!");
+
+        $magic = $input->varInput(null)->asInt(44);
+        $this->assertSame(44, $magic, "Magic did not happen");
+
+        $magic = $input->varInput(55)->asInt(44);
+        $this->assertSame(55, $magic, "to much magic!");
+
+        $magic = $input->varInput(null)->asFloat(44.5);
+        $this->assertSame(44.5, $magic, "Magic did not happen");
+
+        $magic = $input->varInput(55.554)->asFloat(44);
+        $this->assertSame(55.554, $magic, "to much magic!");
+
+        $magic = $input->varInput(null)->asArray([33,55]);
+        $this->assertSame([33,55], $magic, "Magic did not happen");
+
+        $_POST["yep"] = [33,55];
+        $magic = $input->post("yep")->asArray([33,55]);
+        $this->assertSame([33,55], $magic, "to much magic!");
+
+
+    }
 }

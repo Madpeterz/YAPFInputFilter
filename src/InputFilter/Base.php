@@ -39,7 +39,7 @@ abstract class Base extends ErrorLogging
     protected function failed(string $why): void
     {
         $this->reset();
-        $this->addError(__FILE__, __FUNCTION__, $why);
+        $this->addError($why);
         $this->whyfailed = $why;
     }
 
@@ -90,6 +90,9 @@ abstract class Base extends ErrorLogging
     {
         if ($value == null) {
             $value = $this->fetchValue($source, $field);
+        }
+        if ($value === null) {
+            return;
         }
         $this->valueAsArray = null;
         if (is_array($value) == true) {

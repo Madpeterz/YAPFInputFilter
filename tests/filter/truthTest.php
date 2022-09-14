@@ -246,7 +246,51 @@ class truthTest extends TestCase
 
         $reply = $input->post("magic2")->isDate()->asString();
         $this->assertSame($reply, null, "Expected the reply to be null ".$input->getWhyFailed());
+    }
 
+    public function test_NullTypeString()
+    {
+        global $_POST;
+        $_POST["magic"] = null;
+        $input = new InputFilter();
+        $reply = $input->post("magic")->asString();
+        $this->assertSame(null, $reply, "Expected reply to be null");
+    }
 
+    public function test_asList()
+    {
+        global $_POST;
+        $_POST["magic"] = "outfit tooHot";
+        $input = new InputFilter();
+        $reply = $input->post("magic")->asList();
+        $this->assertSame(2, count($reply), "Expected reply length to be 2");
+        $this->assertSame("tooHot", $reply[1], "Incorrect split detected");
+    }
+
+    public function test_asList()
+    {
+        global $_POST;
+        $_POST["magic"] = "outfit tooHot";
+        $input = new InputFilter();
+        $reply = $input->post("magic")->asList();
+        $this->assertSame(2, count($reply), "Expected reply length to be 2");
+        $this->assertSame("tooHot", $reply[1], "Incorrect split detected");
+    }
+
+    public function test_asChunk()
+    {
+        global $_POST;
+        $_POST["magic"] = "seven";
+        $input = new InputFilter();
+        $reply = $input->post("magic")->asChunks();
+        $this->assertSame(6, count($reply), "Expected reply length to be 2");
+        $this->assertSame("e", $reply[1], "Incorrect split detected");
+
+        $_POST["magic"] = "pokepikepool";
+        $input = new InputFilter();
+        $reply = $input->post("magic")->asChunks(4);
+        $this->assertSame(3, count($reply), "Expected reply length to be 2");
+        $this->assertSame("poke", $reply[0], "Incorrect split detected");
     }
 }
+

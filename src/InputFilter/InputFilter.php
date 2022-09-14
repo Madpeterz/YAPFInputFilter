@@ -7,32 +7,60 @@ use YAPF\InputFilter\Rules;
 
 class InputFilter extends Rules
 {
-    public function asHumanReadable(): ?string
+    public function asHumanReadable(?string $defaultNull = null): ?string
     {
+        $output = $this->valueAsString;
         if ($this->valueAsHumanReadable != null) {
-            return $this->valueAsHumanReadable;
+            $output =  $this->valueAsHumanReadable;
         }
-        return $this->valueAsString;
+        return $output ?? $defaultNull;
     }
 
-    public function asString(): ?string
+    public function asChunks(int $size=1, ?array $defaultNull = null): ?array
     {
-        return $this->valueAsString;
+        if($this->valueAsString == null)
+        {
+            return $defaultNull;
+        }
+        if($size < 1)
+        {
+            $size = 1;
+        }
+        return str_split($this->valueAsString, $size);
     }
 
-    public function asFloat(): ?float
+    public function asList(string $separator=" ", ?int $limit=null, ?array $defaultNull = null): ?array
     {
-        return $this->valueAsFloat;
+        if($this->valueAsString == null)
+        {
+            return $defaultNull;
+        }
+        return explode($separator, $this->valueAsString, $limit);
     }
 
-    public function asInt(): ?int
+    public function asCsv(?array $defaultNull = null): ?array
     {
-        return $this->valueAsInt;
+        return $this->asList(",",null,$defaultNull);
     }
 
-    public function asBool(): bool
+    public function asString(?string $defaultNull = null): ?string
     {
-        return $this->valueAsBool;
+        return $this->valueAsString ?? $defaultNull;
+    }
+
+    public function asFloat(?float $defaultNull = null): ?float
+    {
+        return $this->valueAsFloat ?? $defaultNull;
+    }
+
+    public function asInt(?int $defaultNull = null): ?int
+    {
+        return $this->valueAsInt ?? $defaultNull;
+    }
+
+    public function asBool(?bool $defaultNull = null): bool
+    {
+        return $this->valueAsBool ?? $defaultNull;
     }
 
     /**
@@ -40,8 +68,8 @@ class InputFilter extends Rules
      * returns the result as an array or null
      * @return ?mixed[]
      */
-    public function asArray(): ?array
+    public function asArray(?array $defaultNull = null): ?array
     {
-        return $this->valueAsArray;
+        return $this->valueAsArray ?? $defaultNull;
     }
 }
