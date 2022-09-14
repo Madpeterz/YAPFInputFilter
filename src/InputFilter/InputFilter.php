@@ -37,9 +37,9 @@ class InputFilter extends Rules
         }
         if($limit == null)
         {
-            return explode($separator, $this->valueAsString, $limit);
+            return explode($separator, $this->valueAsString);
         }
-        return explode($separator, $this->valueAsString);
+        return explode($separator, $this->valueAsString, $limit);
     }
 
     public function asCsv(?array $defaultNull = null): ?array
