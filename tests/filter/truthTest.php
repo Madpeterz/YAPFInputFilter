@@ -267,12 +267,12 @@ class truthTest extends TestCase
         $this->assertSame("tooHot", $reply[1], "Incorrect split detected");
     }
 
-    public function test_asList()
+    public function test_asCsv()
     {
         global $_POST;
-        $_POST["magic"] = "outfit tooHot";
+        $_POST["magic"] = "outfit,tooHot";
         $input = new InputFilter();
-        $reply = $input->post("magic")->asList();
+        $reply = $input->post("magic")->asCsv();
         $this->assertSame(2, count($reply), "Expected reply length to be 2");
         $this->assertSame("tooHot", $reply[1], "Incorrect split detected");
     }
