@@ -294,5 +294,26 @@ class truthTest extends TestCase
         $this->assertSame("poke", $reply[0], "Incorrect split detected");
         
     }
+
+    public function test_JsonDecodeWithPlus()
+    {
+        global $_POST;
+        $build = [
+            "rawCmd" => "+ pa",
+            "ownerKey" => "K",
+            "unixtime" => 1667633624,
+            "hash" => "G",
+            "uuidSource" => "C",
+            "uuidAccountSource" => "1"
+        ];
+        $source_text = json_encode($build);
+        $_POST["magic"] = $source_text;
+        $input = new InputFilter();
+        $json = $input->post("magic")->isJson()->asArray();
+        $this->assertSame("+ pa", $json["rawCmd"], "Decode error");
+        $encoded = json_encode($json);
+        $this->assertSame($source_text, $encoded, "Encode error");
+        error_log($encoded);
+    }
 }
 
