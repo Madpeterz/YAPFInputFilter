@@ -313,7 +313,6 @@ class truthTest extends TestCase
         $this->assertSame("+ pa", $json["rawCmd"], "Decode error");
         $encoded = json_encode($json);
         $this->assertSame($source_text, $encoded, "Encode error");
-        error_log($encoded);
     }
 }
 
