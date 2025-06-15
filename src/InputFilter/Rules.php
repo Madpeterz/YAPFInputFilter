@@ -4,8 +4,15 @@ namespace YAPF\InputFilter;
 
 use Exception;
 
+/**
+ * Class Rules
+ * Provides various rules and validation methods for input values.
+ */
 abstract class Rules extends Convertors
 {
+    /**
+     * Decodes HTML entities in the string value.
+     */
     public function htmlDecode(): InputFilter
     {
         if ($this->valueAsString == null) {
@@ -16,6 +23,10 @@ abstract class Rules extends Convertors
     }
 
 
+    /**
+     * Checks if the value is not matching the given array.
+     * @param array $testing
+     */
     protected function isNotMachingArray(array $testing): InputFilter
     {
         if ($this->valueAsArray === null) {
@@ -33,7 +44,8 @@ abstract class Rules extends Convertors
     }
 
     /**
-     * supports: string,int,float or array as the check value
+     * Checks if the value is not equal to the given value (supports string, int, float, or array).
+     * @param mixed $value
      */
     public function isNot($value): InputFilter
     {
@@ -56,9 +68,8 @@ abstract class Rules extends Convertors
     }
 
     /**
-     * isJson
-     * Checks if the string can be converted into a json object
-     * if so the array value is updated to the json object.
+     * Checks if the string can be converted into a JSON object.
+     * If so, the array value is updated to the JSON object.
      */
     public function isJson(): InputFilter
     {
@@ -87,6 +98,10 @@ abstract class Rules extends Convertors
         }
         return $this;
     }
+
+    /**
+     * Checks if the value is a valid UUID.
+     */
     public function isUuid(): InputFilter
     {
         if ($this->valueAsString == null) {
@@ -109,6 +124,11 @@ abstract class Rules extends Convertors
         }
         return $this;
     }
+
+    /**
+     * Checks if the value is a valid URL.
+     * @param bool $httpsOnly
+     */
     public function isUrl(bool $httpsOnly = false): InputFilter
     {
         if ($this->valueAsString == null) {
@@ -129,6 +149,10 @@ abstract class Rules extends Convertors
         $this->checkStartsWith($match);
         return $this;
     }
+
+    /**
+     * Checks if the value is a valid hexadecimal color.
+     */
     public function isHexColor(): InputFilter
     {
         if ($this->valueAsString == null) {
@@ -154,6 +178,9 @@ abstract class Rules extends Convertors
         return $this;
     }
 
+    /**
+     * Checks if the value is a valid RGB vector3.
+     */
     public function isRgbVector3(): InputFilter
     {
         if ($this->valueAsString == null) {
@@ -162,6 +189,9 @@ abstract class Rules extends Convertors
         return $this->isVector3(true, 0, 255);
     }
 
+    /**
+     * Checks if the value is a valid email address.
+     */
     public function isEmail(): InputFilter
     {
         if ($this->valueAsString == null) {
@@ -173,6 +203,12 @@ abstract class Rules extends Convertors
         return $this;
     }
 
+    /**
+     * Checks if the value is a valid vector3, optionally with strictness and value bounds.
+     * @param bool $strict
+     * @param float|null $valuesMin
+     * @param float|null $valuesMax
+     */
     public function isVector3(bool $strict = true, ?float $valuesMin = null, ?float $valuesMax = null): InputFilter
     {
         if ($strict == true) {
@@ -205,11 +241,8 @@ abstract class Rules extends Convertors
     }
 
     /**
-     * isDate
-     * checks if the string is a date formated "MM/DD/YYYY",
-     * if is matchs then:
-     * int value is updated to unixtime
-     * HumanReadable value is updated
+     * Checks if the value is a date formatted as MM/DD/YYYY.
+     * If matched, updates int value to unixtime and human readable value.
      */
     public function isDate(): InputFilter
     {

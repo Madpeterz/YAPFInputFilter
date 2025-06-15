@@ -4,12 +4,14 @@ namespace YAPF\InputFilter;
 
 use Exception;
 
+/**
+ * Class Convertors
+ * Provides conversion utilities for input values.
+ */
 abstract class Convertors extends Checks
 {
     /**
-     * Takes the current value as string
-     * if not null, then runs it in base64 decode and popuplates out the values
-     * @return InputFilter The InputFilter object.
+     * Decodes the current string value from base64 and updates the value properties.
      */
     public function fromBase64(): InputFilter
     {
